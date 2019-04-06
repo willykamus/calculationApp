@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">calculationApp</string>
+    <string name="title">Calculation</string>
+    <string name="question_title">Your question</string>
 </resources>
