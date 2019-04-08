@@ -7,7 +7,6 @@ public class MathQuestion extends Question {
     public MathQuestion() {
 
         MathQuestionGenerator question = new MathQuestionGenerator();
-
         this.questionText = question.text;
         this.correctAnswer = question.result;
 
@@ -29,6 +28,10 @@ public class MathQuestion extends Question {
         private String text;
         private Answer result;
 
+        private MathQuestionGenerator(){
+            questionGenerator();
+        }
+
         private void questionGenerator(){
 
             //First get a random number
@@ -37,21 +40,21 @@ public class MathQuestion extends Question {
             int num2 = random.nextInt(10);
             int operation = random.nextInt(operations.length);
 
-            switch (operation) {
+            switch (operations[operation]) {
 
                 case '+':
-                    result = new Answer(num1 + num2);
-                    text = "" + num1 + " + " + num2;
+                    this.result = new Answer(num1 + num2);
+                    this.text = "" + num1 + " + " + num2;
                     break;
 
                 case '-':
-                    result = new Answer(num1 - num2);
-                    text = "" + num1 + " - " + num2;
+                    this.result = new Answer(num1 - num2);
+                    this.text = "" + num1 + " - " + num2;
                     break;
 
                 case '*':
-                    result = new Answer(num1 * num2);
-                    text = "" + num1 + " * " + num2;
+                    this.result = new Answer(num1 * num2);
+                    this.text = "" + num1 + " * " + num2;
                     break;
 
             }

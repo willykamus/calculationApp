@@ -25,13 +25,30 @@ public class MathAnsweredQuestion extends QuestionDecorator {
 
     }
 
-    public static MathAnsweredQuestion getAnsweredQuestion(int index) {
+    public int getElapsedTime() {
+
+        return this.elapsedTime;
+    }
+
+    public int getUserAnswer() {
+        return userAnswer.getAnswer();
+    }
+
+    public void setUserAnswer(Answer userAnswer) {
+        this.userAnswer = userAnswer;
+    }
+
+    public static Question getAnsweredQuestion(int index) {
 
         return list.get(index);
 
     }
 
-    public void setStatus(){
+    public boolean getStatus() {
+        return status;
+    }
+
+    private void setStatus(){
 
         //Validator
         correctAnswer = this.getCorrectAnswer();
@@ -44,6 +61,12 @@ public class MathAnsweredQuestion extends QuestionDecorator {
 
             this.status = false;
         }
+
+    }
+
+    public static List<MathAnsweredQuestion> getAllQuestions(){
+
+        return MathAnsweredQuestion.list;
 
     }
 

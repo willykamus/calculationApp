@@ -2,5 +2,5 @@
     <string name="app_name">calculationApp</string>
     <string name="title">Calculation</string>
     <string name="question_title">Your question</string>
-    <integer name="time">10</integer>
+    <integer name="time">10000</integer>
 </resources>

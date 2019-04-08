@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:weightSum="100">
+
+    <TextView
+        android:id="@+id/textView_listQuestion"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_weight="25"
+        android:gravity="center_vertical"
+        android:text="TextView"
+        android:textSize="15dp"/>
+
+    <TextView
+        android:id="@+id/textView_listAnswer"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_weight="25"
+        android:text="TextView"
+        android:textSize="15dp"/>
+
+    <TextView
+        android:id="@+id/textView_listTime"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_weight="25"
+        android:text="TextView"
+        android:textSize="15dp"/>
+
+    <TextView
+        android:id="@+id/textView_listStatus"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_weight="25"
+        android:text="TextView"
+        android:textSize="15dp"/>
+</LinearLayout>

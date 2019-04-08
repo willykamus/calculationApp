@@ -1,5 +1,6 @@
 package com.ching.calculationapp;
 
+import android.content.Intent;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -33,6 +34,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     long elapseTime;
 
+    int total;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         textViewQuestion = findViewById(R.id.textView_question);
 
         textViewAnswer = findViewById(R.id.textView_answer);
+        textViewAnswer.setText("");
         
         buttonClear = findViewById(R.id.button_Clear);
         buttonClear.setOnClickListener(this);
@@ -103,6 +107,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.button_Validate:
 
+                countDownTimer.cancel();
                 // Save the answer
                 saveQuestion();
                 // Start timer again
@@ -122,6 +127,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.button_Quit:
                 finish();
+                break;
+
+            case R.id.button_Result:
+                countDownTimer.cancel();
+                Intent intent = new Intent(this, ResultActivity.class);
+                startActivity(intent);
                 break;
             
             
@@ -148,7 +159,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 elapseTime = 0;
                 saveQuestion();
-                countDownTimer.start();
+                startTimer();
+                total = total + getResources().getInteger(R.integer.time);
 
             }
         }.start();
@@ -164,9 +176,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void saveQuestion(){
 
         // Save the answer
-        int userAnswer = Integer.valueOf(textViewAnswer.getText().toString());
+        int userAnswer;
+        String text = textViewAnswer.getText().toString();
+        if(text.equals("")){
+            userAnswer = 0;
+        } else {
+            userAnswer = Integer.valueOf(textViewAnswer.getText().toString());
+        }
         Answer answer = new Answer(userAnswer);
-        MathAnsweredQuestion answeredQuestion = new MathAnsweredQuestion(currentQuestion,answer,(int)elapseTime);
+        Question answeredQuestion = new MathAnsweredQuestion(currentQuestion,answer,(int) elapseTime/1000);
 
     }
 }
