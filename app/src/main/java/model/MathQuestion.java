@@ -39,21 +39,26 @@ public class MathQuestion extends Question {
             int num1 = random.nextInt(10);
             int num2 = random.nextInt(10);
             int operation = random.nextInt(operations.length);
+            int questionResult;
 
             switch (operations[operation]) {
 
                 case '+':
-                    this.result = new Answer(num1 + num2);
+
+                    questionResult = num1 + num2;
+                    this.result = new Answer(String.valueOf(questionResult));
                     this.text = "" + num1 + " + " + num2;
                     break;
 
                 case '-':
-                    this.result = new Answer(num1 - num2);
+                    questionResult = num1 - num2;
+                    this.result = new Answer(String.valueOf(questionResult));;
                     this.text = "" + num1 + " - " + num2;
                     break;
 
                 case '*':
-                    this.result = new Answer(num1 * num2);
+                    questionResult = num1 * num2;
+                    this.result = new Answer(String.valueOf(questionResult));
                     this.text = "" + num1 + " * " + num2;
                     break;
 

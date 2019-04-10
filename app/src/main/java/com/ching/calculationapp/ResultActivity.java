@@ -40,6 +40,54 @@ public class ResultActivity extends AppCompatActivity {
 
         listView.setAdapter(adapter);
 
+        int totaltime = 0;
+        int elapsetime = 0;
+
+        for (int i = 0; i < MathAnsweredQuestion.getAllQuestions().size(); i++){
+
+
+            totaltime += 10;
+
+            MathAnsweredQuestion question = MathAnsweredQuestion.getQuestionAt(i);
+
+            elapsetime += question.getElapsedTime();
+
+        }
+
+
+        String str = "Total questions: "+ getTotalQuestion() +
+                     "\nTotal answered questions: "+ getTotalAnsweredQuestions()+
+                     "\n"+"Total: " + totaltime +
+                     "\nElapsed Time: "+elapsetime;
+
+        textViewResults.setText(str);
+
 
     }
+
+    private String getTotalQuestion() {
+
+        String str = String.valueOf(MathAnsweredQuestion.getAllQuestions().size());
+        return str;
+
+
+    }
+
+    private String getTotalAnsweredQuestions(){
+
+        int count = 0;
+        for(int i = 0; i < MathAnsweredQuestion.getAllQuestions().size(); i++){
+
+            MathAnsweredQuestion currentQuestion = MathAnsweredQuestion.getQuestionAt(i);
+
+            if (!currentQuestion.getUserAnswer().equals("")){
+                count++;
+            }
+        }
+
+        return String.valueOf(count);
+
+    }
+
+
 }

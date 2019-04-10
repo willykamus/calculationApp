@@ -2,17 +2,17 @@ package model;
 
 public class Answer {
 
-    private int answer;
+    private String answer;
 
-    public Answer(int answer) {
+    public Answer(String answer) {
         this.answer = answer;
     }
 
-    public int getAnswer() {
+    public String getAnswer() {
         return answer;
     }
 
-    public void setAnswer(int answer) {
+    public void setAnswer(String answer) {
         this.answer = answer;
     }
 }

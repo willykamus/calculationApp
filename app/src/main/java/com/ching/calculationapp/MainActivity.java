@@ -32,6 +32,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     TextView textViewQuestion, textViewAnswer;
 
+    boolean answeredQuestion = false;
+
     long elapseTime;
 
     int total;
@@ -107,11 +109,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.button_Validate:
 
-                countDownTimer.cancel();
+                //countDownTimer.cancel();
                 // Save the answer
                 saveQuestion();
+                answeredQuestion = true;
+
                 // Start timer again
-                startTimer();
+                // startTimer();
 
                 // Save the question and answer in the file
 
@@ -157,8 +161,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onFinish() {
 
-                elapseTime = 0;
-                saveQuestion();
+                if(elapseTime == 10){
+                    saveQuestion();
+                }
                 startTimer();
                 total = total + getResources().getInteger(R.integer.time);
 
@@ -176,13 +181,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void saveQuestion(){
 
         // Save the answer
-        int userAnswer;
-        String text = textViewAnswer.getText().toString();
-        if(text.equals("")){
-            userAnswer = 0;
-        } else {
-            userAnswer = Integer.valueOf(textViewAnswer.getText().toString());
-        }
+        //String userAnswer;
+        String userAnswer = textViewAnswer.getText().toString();
         Answer answer = new Answer(userAnswer);
         Question answeredQuestion = new MathAnsweredQuestion(currentQuestion,answer,(int) elapseTime/1000);
 

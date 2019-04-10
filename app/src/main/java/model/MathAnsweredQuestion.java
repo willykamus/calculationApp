@@ -25,12 +25,16 @@ public class MathAnsweredQuestion extends QuestionDecorator {
 
     }
 
+    public static MathAnsweredQuestion getQuestionAt(int index){
+        return  list.get(index);
+    }
+
     public int getElapsedTime() {
 
         return this.elapsedTime;
     }
 
-    public int getUserAnswer() {
+    public String getUserAnswer() {
         return userAnswer.getAnswer();
     }
 
@@ -53,7 +57,7 @@ public class MathAnsweredQuestion extends QuestionDecorator {
         //Validator
         correctAnswer = this.getCorrectAnswer();
 
-        if(correctAnswer.getAnswer() == userAnswer.getAnswer()) {
+        if(correctAnswer.getAnswer().equals(userAnswer.getAnswer())) {
 
             this.status = true;
 
