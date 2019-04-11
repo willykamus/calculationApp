@@ -194,11 +194,6 @@
             android:layout_weight="1">
 
             <Button
-                android:id="@+id/button_Stop"
-                style="@style/options"
-                android:text="Stop" />
-
-            <Button
                 android:id="@+id/button_Save"
                 style="@style/options"
                 android:text="Save" />

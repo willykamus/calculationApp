@@ -30,6 +30,9 @@ public class CustomAdapter extends ArrayAdapter<MathAnsweredQuestion> {
         String question = getItem(position).getQuestionText();
         String answer = String.valueOf(getItem(position).getUserAnswer());
         String elapsetime = String.valueOf(getItem(position).getElapsedTime());
+        if(elapsetime.equals("10") && answer.equals("")){
+            elapsetime = "";
+        }
         String status;
 
         if(getItem(position).getStatus()){

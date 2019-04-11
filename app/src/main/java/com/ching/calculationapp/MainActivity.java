@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -24,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     
     ArrayList<Button> listNumbers = new ArrayList<>();
     
-    Button buttonClear, buttonValidate, buttonResults, buttonQuit, buttonStart, buttonSave, buttonStop;
+    Button buttonClear, buttonValidate, buttonResults, buttonQuit, buttonStart, buttonSave;
 
     Question currentQuestion;
     
@@ -70,9 +71,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonSave = findViewById(R.id.button_Save);
         buttonSave.setOnClickListener(this);
         
-        buttonStop = findViewById(R.id.button_Stop);
-        buttonStop.setOnClickListener(this);
-        
         for(int i = 0; i < buttonsNumbers.length; i++){
             
             Button button = findViewById(buttonsNumbers[i]);
@@ -109,20 +107,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.button_Validate:
 
-                //countDownTimer.cancel();
+                countDownTimer.cancel();
                 // Save the answer
-                saveQuestion();
                 answeredQuestion = true;
+                saveQuestion();
+
 
                 // Start timer again
-                // startTimer();
+                startTimer();
 
                 // Save the question and answer in the file
 
-                break;
-
-            case R.id.button_Stop:
-                countDownTimer.cancel();
                 break;
 
             case R.id.button_Clear:
@@ -146,6 +141,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void startTimer() {
 
+        answeredQuestion = false;
         currentQuestion= new MathQuestion();
         textViewQuestion.setText(currentQuestion.getQuestionText());
 
@@ -155,17 +151,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onTick(long millisUntilFinished) {
 
                 elapseTime = getResources().getInteger(R.integer.time) - millisUntilFinished;
+                Log.i("time", "onTick: "+elapseTime);
 
             }
 
             @Override
             public void onFinish() {
 
-                if(elapseTime == 10){
+                if(elapseTime > getResources().getInteger(R.integer.time)-2000 && answeredQuestion == false){
                     saveQuestion();
                 }
                 startTimer();
-                total = total + getResources().getInteger(R.integer.time);
+                //total = total + getResources().getInteger(R.integer.time);
 
             }
         }.start();
@@ -181,8 +178,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void saveQuestion(){
 
         // Save the answer
-        //String userAnswer;
-        String userAnswer = textViewAnswer.getText().toString();
+        String userAnswer;
+        if (answeredQuestion == false) {
+            userAnswer = "";
+            elapseTime = 10000;
+        } else {
+            userAnswer = textViewAnswer.getText().toString();
+        }
+
         Answer answer = new Answer(userAnswer);
         Question answeredQuestion = new MathAnsweredQuestion(currentQuestion,answer,(int) elapseTime/1000);
 
