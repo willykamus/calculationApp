@@ -75,4 +75,21 @@ public class MathAnsweredQuestion extends QuestionDecorator {
     }
 
 
+    @Override
+    public String toString() {
+
+        String result = getStatus() ? "Correct" : "Wrong";
+
+        String str = this.getQuestionText() + "," + this.getUserAnswer() + "," + this.getElapsedTime() + "," + result+"\n";
+
+        String finalStr = str;
+
+        for(int i = 0; i < str.length()-1; i++){
+            finalStr += "-";
+        }
+
+        finalStr += "\n";
+
+        return finalStr;
+    }
 }

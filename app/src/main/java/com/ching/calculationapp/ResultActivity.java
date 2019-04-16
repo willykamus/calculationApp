@@ -58,25 +58,26 @@ public class ResultActivity extends AppCompatActivity {
         String str = "Total questions: "+ getTotalQuestion() +
                      "\nTotal answered questions: "+ getTotalAnsweredQuestions()+
                      "\n"+"Total: " + totaltime +
-                     "\nElapsed Time: "+elapsetime;
+                     "\nElapsed Time: "+elapsetime +
+                     "\n% Correct answer: "+ (int)((getTotalCorrectAnswers()/getTotalQuestion())*100) +
+                     "\n% Fail answer " + (int)((getTotalIncorrect()/getTotalQuestion())*100) +
+                     "\nVelocity: " +elapsetime/totaltime;
 
         textViewResults.setText(str);
 
 
     }
 
-    private String getTotalQuestion() {
+    private int getTotalQuestion() {
 
-        String str = String.valueOf(MathAnsweredQuestion.getAllQuestions().size());
-        return str;
-
+        return MathAnsweredQuestion.getAllQuestions().size();
 
     }
 
     private String getTotalAnsweredQuestions(){
 
         int count = 0;
-        for(int i = 0; i < MathAnsweredQuestion.getAllQuestions().size(); i++){
+        for(int i = 0; i < getTotalQuestion(); i++){
 
             MathAnsweredQuestion currentQuestion = MathAnsweredQuestion.getQuestionAt(i);
 
@@ -87,6 +88,36 @@ public class ResultActivity extends AppCompatActivity {
 
         return String.valueOf(count);
 
+    }
+
+    private int getTotalCorrectAnswers(){
+
+        int count = 0;
+        for(int i = 0; i < getTotalQuestion(); i++){
+
+            MathAnsweredQuestion currentQuestion = MathAnsweredQuestion.getQuestionAt(i);
+
+            if(currentQuestion.getStatus()){
+                count++;
+            }
+        }
+
+        return count;
+    }
+
+    private int getTotalIncorrect(){
+
+        int count = 0;
+        for(int i = 0; i < getTotalQuestion(); i++){
+
+            MathAnsweredQuestion currentQuestion = MathAnsweredQuestion.getQuestionAt(i);
+
+            if(!currentQuestion.getStatus()){
+                count++;
+            }
+        }
+
+        return count;
     }
 
 

@@ -13,6 +13,7 @@
         android:layout_height="60dp"
         android:layout_weight="25"
         android:textAlignment="center"
+        android:gravity="center"
         android:text="TextView"
         android:textSize="15dp"/>
 
@@ -22,6 +23,7 @@
         android:layout_height="60dp"
         android:layout_weight="25"
         android:textAlignment="center"
+        android:gravity="center"
         android:text="TextView"
         android:textSize="15dp"/>
 
@@ -30,6 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_weight="25"
+        android:gravity="center"
         android:textAlignment="center"
         android:text="TextView"
         android:textSize="15dp"/>
@@ -38,6 +41,7 @@
         android:id="@+id/textView_listStatus"
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:gravity="center"
         android:layout_weight="25"
         android:textAlignment="center"
         android:text="TextView"

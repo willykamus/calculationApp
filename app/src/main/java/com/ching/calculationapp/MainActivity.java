@@ -11,8 +11,10 @@ import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.util.ArrayList;
+import java.util.List;
 
 import model.Answer;
+import model.FileManager;
 import model.MathAnsweredQuestion;
 import model.MathQuestion;
 import model.Question;
@@ -25,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     
     ArrayList<Button> listNumbers = new ArrayList<>();
     
-    Button buttonClear, buttonValidate, buttonResults, buttonQuit, buttonStart, buttonSave;
+    Button buttonClear, buttonValidate, buttonResults, buttonQuit, buttonStart, buttonSave, buttonDot, buttonMinus;
 
     Question currentQuestion;
     
@@ -34,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextView textViewQuestion, textViewAnswer;
 
     boolean answeredQuestion = false;
+    boolean running = false;
 
     long elapseTime;
 
@@ -70,6 +73,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         
         buttonSave = findViewById(R.id.button_Save);
         buttonSave.setOnClickListener(this);
+
+        buttonDot = findViewById(R.id.button_dot);
+        buttonDot.setOnClickListener(this);
+
+        buttonMinus = findViewById(R.id.button_minus);
+        buttonMinus.setOnClickListener(this);
         
         for(int i = 0; i < buttonsNumbers.length; i++){
             
@@ -98,26 +107,64 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         
         
         switch (v.getId()){
+
+            case R.id.button_minus:
+
+                if(!textViewAnswer.getText().toString().contains("-")) {
+                    if (!textViewAnswer.getText().toString().equals("")) {
+                        String str = "-" + textViewAnswer.getText().toString();
+                        textViewAnswer.setText(str);
+                    } else {
+                        textViewAnswer.setText("-");
+                    }
+                } else {
+                    String str = textViewAnswer.getText().toString();
+                    textViewAnswer.setText(str.substring(1));
+                }
+                break;
+
+            case R.id.button_dot:
+
+                if(!textViewAnswer.getText().toString().contains(".")) {
+                    if(textViewAnswer.getText().toString().equals("")) {
+                        textViewAnswer.setText("0.");
+                    }else{
+                        textViewAnswer.append(".");
+                    }
+                } else {
+                    String str = textViewAnswer.getText().toString();
+                    textViewAnswer.setText(str.substring(0, str.length()-1));
+                }
+                break;
         
             case R.id.button_Start:
 
-                startTimer();
+                if (running) {
+                    buttonStart.setText("Start");
+                    running = false;
+                    countDownTimer.cancel();
+                    resetTimer();
+                } else {
+                    buttonStart.setText("Stop");
+                    running = true;
+                    startTimer();
+                }
 
                 break;
 
             case R.id.button_Validate:
 
-                countDownTimer.cancel();
                 // Save the answer
                 answeredQuestion = true;
+
                 saveQuestion();
 
+                resetTimer();
 
                 // Start timer again
                 startTimer();
 
                 // Save the question and answer in the file
-
                 break;
 
             case R.id.button_Clear:
@@ -125,6 +172,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.button_Quit:
+                //countDownTimer.cancel();
                 finish();
                 break;
 
@@ -133,6 +181,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Intent intent = new Intent(this, ResultActivity.class);
                 startActivity(intent);
                 break;
+
+            case R.id.button_Save:
+                List<MathAnsweredQuestion> questions = MathAnsweredQuestion.getAllQuestions();
+                FileManager.writeFile(this, "results.txt", questions);
+                break;
             
             
         }
@@ -140,6 +193,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void startTimer() {
+
 
         answeredQuestion = false;
         currentQuestion= new MathQuestion();
