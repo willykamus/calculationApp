@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     
     CountDownTimer countDownTimer;
 
-    TextView textViewQuestion, textViewAnswer;
+    TextView textViewQuestion, textViewAnswer, textViewCounter;
 
     boolean answeredQuestion = false;
     boolean running = false;
@@ -52,6 +52,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initialize() {
 
         textViewQuestion = findViewById(R.id.textView_question);
+
+        textViewCounter = findViewById(R.id.textView_Counter);
 
         textViewAnswer = findViewById(R.id.textView_answer);
         textViewAnswer.setText("");
@@ -205,6 +207,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onTick(long millisUntilFinished) {
 
                 elapseTime = getResources().getInteger(R.integer.time) - millisUntilFinished;
+                textViewCounter.setText(String.valueOf(millisUntilFinished/1000));
                 Log.i("time", "onTick: "+elapseTime);
 
             }
