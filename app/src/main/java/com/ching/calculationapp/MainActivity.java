@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.util.ArrayList;
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     boolean answeredQuestion = false;
     boolean running = false;
+    boolean started = false;
 
     long elapseTime;
 
@@ -66,15 +68,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         
         buttonResults = findViewById(R.id.button_Result);
         buttonResults.setOnClickListener(this);
+        buttonResults.setEnabled(false);
         
         buttonValidate = findViewById(R.id.button_Validate);
         buttonValidate.setOnClickListener(this);
+        buttonValidate.setEnabled(false);
         
         buttonStart = findViewById(R.id.button_Start);
         buttonStart.setOnClickListener(this);
         
         buttonSave = findViewById(R.id.button_Save);
         buttonSave.setOnClickListener(this);
+        buttonSave.setEnabled(false);
 
         buttonDot = findViewById(R.id.button_dot);
         buttonDot.setOnClickListener(this);
@@ -145,10 +150,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     buttonStart.setText("Start");
                     running = false;
                     countDownTimer.cancel();
+
                     resetTimer();
+
+                    setButtons();
+
                 } else {
                     buttonStart.setText("Stop");
                     running = true;
+                    started = true;
+                    Log.i("checked","Started");
+
+                    setButtons();
+
                     startTimer();
                 }
 
@@ -160,6 +174,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 answeredQuestion = true;
 
                 saveQuestion();
+
+                textViewAnswer.setText("");
 
                 resetTimer();
 
@@ -179,9 +195,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.button_Result:
-                countDownTimer.cancel();
-                Intent intent = new Intent(this, ResultActivity.class);
-                startActivity(intent);
+                if(running){
+
+                    Toast.makeText(this,"Test should be stopped first",Toast.LENGTH_LONG).show();
+
+                } else {
+
+                    countDownTimer.cancel();
+                    Intent intent = new Intent(this, ResultActivity.class);
+                    startActivity(intent);
+
+                }
+
                 break;
 
             case R.id.button_Save:
@@ -193,6 +218,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         
     }
+
+    private void setButtons(){
+
+        if(started && running){
+
+            buttonValidate.setEnabled(true);
+            buttonSave.setEnabled(true);
+            buttonResults.setEnabled(true);
+
+        } else if (started && !running) {
+
+            buttonValidate.setEnabled(true);
+            buttonSave.setEnabled(true);
+            buttonResults.setEnabled(true);
+
+        } else if (!started) {
+
+            buttonValidate.setEnabled(false);
+            buttonSave.setEnabled(false);
+            buttonResults.setEnabled(false);
+
+        }
+
+    }
+
 
     private void startTimer() {
 

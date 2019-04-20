@@ -59,9 +59,10 @@ public class ResultActivity extends AppCompatActivity {
                      "\nTotal answered questions: "+ getTotalAnsweredQuestions()+
                      "\n"+"Total: " + totaltime +
                      "\nElapsed Time: "+elapsetime +
-                     "\n% Correct answer: "+ (int)((getTotalCorrectAnswers()/getTotalQuestion())*100) +
-                     "\n% Fail answer " + (int)((getTotalIncorrect()/getTotalQuestion())*100) +
-                     "\nVelocity: " +elapsetime/totaltime;
+                     "\n% Correct answer: "+ (int)(((double)getTotalCorrectAnswers()/(double)getTotalQuestion())*100) +"%" +
+                     "\n% Fail answer " + (int)(((double)getTotalIncorrect()/(double)getTotalQuestion())*100) + "%" +
+                     "\nVelocity: " + (int)(((double)elapsetime/(double)totaltime)*100) + "%" +
+                     "\n*Velocity means the amount of time in % that you need to answer a question, lower is better";
 
         textViewResults.setText(str);
 
